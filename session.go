@@ -1,15 +1,21 @@
 package broseph
 
 import (
+	"code.google.com/p/go-uuid/uuid"
 	"github.com/kr/pty"
 )
 
-var Sessions []Session
+var Sessions map[UUID]Session
 
-type Session struct {
-	ID string
-}
+type (
+	UUID    string
+	Session struct {
+		ID UUID
+	}
+)
 
 func NewSession() Session {
-	return Session{}
+	s := Session{
+		ID: uuid.New(),
+	}
 }
