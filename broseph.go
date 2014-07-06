@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/localhots/broseph"
+	"github.com/localhots/broseph/broseph"
 	"os"
 	"os/signal"
 	"syscall"
