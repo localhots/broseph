@@ -35,20 +35,21 @@ func NewSession() *Session {
 func (s *Session) Accept() {
 	l, err := net.Listen("unix", "/tmp/"+s.Id+".sock")
 	if err != nil {
-		panic(err)
+		println("Failed opening socket:", err.Error())
+		return
 	}
 
 	bash := exec.Command("bash")
 	_pty, err := pty.Start(bash)
 	if err != nil {
-		println("Failed starting bash", err.Error())
+		println("Failed starting bash:", err.Error())
 		return
 	}
 
 	for {
 		conn, err := l.Accept()
 		if err != nil {
-			println("Error accepting connection", err.Error())
+			println("Error accepting connection:", err.Error())
 			continue
 		}
 
