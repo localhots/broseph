@@ -8,10 +8,6 @@ import (
 	"os/exec"
 )
 
-const (
-	BufferSize = 1024 * 16
-)
-
 var (
 	sessions = []Session{}
 )
@@ -59,9 +55,7 @@ func (s *Session) Accept() {
 			continue
 		}
 
-		// Half-duplex
-		// TODO: Full-duplex
-		io.Copy(_pty, conn)
+		go io.Copy(_pty, conn)
 		io.Copy(conn, _pty)
 	}
 }
