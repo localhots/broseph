@@ -17,11 +17,15 @@ var (
 )
 
 type (
+	// Session is a container responsible for storing session-related
+	// information.
 	Session struct {
-		Id string
+		Id string // Session identifier
 	}
 )
 
+// Creates a new Session and starts accepting connections.
+// Returns a pointer to a newly created session.
 func NewSession() *Session {
 	s := Session{
 		Id: uuid.New(),
@@ -32,6 +36,8 @@ func NewSession() *Session {
 	return &s
 }
 
+// Starts accepting connections on the UNIX domain socket associated with
+// session.
 func (s *Session) Accept() {
 	l, err := net.Listen("unix", "/tmp/"+s.Id+".sock")
 	if err != nil {

@@ -6,12 +6,12 @@ import (
 	"net/http"
 )
 
-func NewSessionHandler(rw http.ResponseWriter, req *http.Request) {
+func newSessionHandler(rw http.ResponseWriter, req *http.Request) {
 	s := NewSession()
 	fmt.Fprintf(rw, s.Id)
 }
 
-func SessionListHandler(rw http.ResponseWriter, req *http.Request) {
+func sessionListHandler(rw http.ResponseWriter, req *http.Request) {
 	ids := make([]string, len(sessions))
 	for i, s := range sessions {
 		ids[i] = s.Id
@@ -20,8 +20,9 @@ func SessionListHandler(rw http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(rw, string(result))
 }
 
+// Starts Broseph HTTP server on port 1879
 func StartServer() {
-	http.HandleFunc("/new", NewSessionHandler)
-	http.HandleFunc("/list", SessionListHandler)
+	http.HandleFunc("/new", newSessionHandler)
+	http.HandleFunc("/list", sessionListHandler)
 	http.ListenAndServe(":1879", nil)
 }
